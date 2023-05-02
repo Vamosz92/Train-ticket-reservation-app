@@ -13,10 +13,8 @@ namespace Beadando
 {
     public partial class Jegyvasarlo : Form
     {
-        DB db = new DB();
-        SQLiteCommand com;
-        SQLiteDataAdapter adapter;
-        DataTable dt;
+
+        private MyApplication myApp;
 
         private static int valasztottUtvonalIndex;
         private static int normalGyorsIndex;
@@ -31,9 +29,10 @@ namespace Beadando
             return normalGyorsIndex;
         }
 
-        public Jegyvasarlo()
+        public Jegyvasarlo(MyApplication myApp)
         {
             InitializeComponent();
+            this.myApp = myApp;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -43,7 +42,12 @@ namespace Beadando
         {
             valasztottUtvonalIndex = comboBox1.SelectedIndex;
             normalGyorsIndex = comboBox2.SelectedIndex;
-            Jegyvasarlo2 j2 = new Jegyvasarlo2();
+
+            myApp.myDTO.Utvonal = valasztottUtvonalIndex == 0 ? "Ajka-Budapest" : "Ajka-Szombathely";
+            myApp.myDTO.Tipus = normalGyorsIndex == 0 ? "Normál" : "Gyors";
+
+
+            Jegyvasarlo2 j2 = new Jegyvasarlo2(myApp);
             this.Hide();
             j2.Show();
         }
@@ -73,7 +77,7 @@ namespace Beadando
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
+            Form1 form1 = new Form1(myApp);
             this.Hide();
             form1.Show();
         }

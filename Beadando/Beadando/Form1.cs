@@ -7,13 +7,16 @@ namespace Beadando
     public partial class Form1 : Form
     {
 
-        DB db = new DB();
-        SQLiteCommand command;
-        SQLiteDataAdapter adapter;
-        DataTable dt;
+        MyApplication myApp;
 
-        public Form1()
+        DB db = new DB();
+        SQLiteCommand? command;
+        SQLiteDataAdapter? adapter;
+        DataTable? dt;
+
+        public Form1(MyApplication myApp)
         {
+            this.myApp = myApp;
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -30,7 +33,7 @@ namespace Beadando
             adapter.Fill(dt);
             db.closeConnection();
 
-            string selectedItem = comboBox1.SelectedItem.ToString();
+            string? selectedItem = comboBox1.SelectedItem.ToString();
 
             if (dt.Rows.Count > 0)
             {
@@ -41,7 +44,7 @@ namespace Beadando
                         MessageBox.Show("Ön sikeresen belépett " + dt.Rows[i]["szerepkor"].ToString() + "ként!");
                         if (comboBox1.SelectedIndex == 0)
                         {
-                            Jegyvasarlo j = new Jegyvasarlo();
+                            Jegyvasarlo j = new Jegyvasarlo(myApp);
                             this.Hide();
                             j.ShowDialog();
                         }

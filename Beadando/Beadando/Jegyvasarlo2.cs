@@ -13,10 +13,12 @@ namespace Beadando
 {
     public partial class Jegyvasarlo2 : Form
     {
+        private MyApplication myApp;
+
         DB db = new DB();
-        SQLiteCommand com;
-        SQLiteDataAdapter adapter;
-        DataTable dt;
+        SQLiteCommand? com;
+        SQLiteDataAdapter? adapter;
+        DataTable? dt;
         private static int numOfSelectedCells;
 
         //próba
@@ -28,9 +30,10 @@ namespace Beadando
         }
 
 
-        public Jegyvasarlo2()
+        public Jegyvasarlo2(MyApplication myApp)
         {
             InitializeComponent();
+            this.myApp = myApp;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -110,8 +113,11 @@ namespace Beadando
         private void button1_Click(object sender, EventArgs e)
         {
             numOfSelectedCells = dataGridView1.SelectedCells.Count;
+
+            myApp.myDTO.Helyek_szama = numOfSelectedCells;
+
             this.Hide();
-            Jegyvasarlo3 j3 = new Jegyvasarlo3();
+            Jegyvasarlo3 j3 = new Jegyvasarlo3(myApp);
             j3.Show();
         }
 
@@ -123,13 +129,13 @@ namespace Beadando
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Jegyvasarlo jegyvasarlo1 = new Jegyvasarlo();
+            Jegyvasarlo jegyvasarlo1 = new Jegyvasarlo(myApp);
             jegyvasarlo1.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
+            Form1 form1 = new Form1(myApp);
             this.Hide();
             form1.Show();
         }
